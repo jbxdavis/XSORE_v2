@@ -1,0 +1,146 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Execution #<%= @execution.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/executions" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_execution/<%= @execution.id %>" class="btn btn-block btn-outline-secondary">
+          Delete execution
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Date
+      </dt>
+      <dd>
+        <%= @execution.date %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @execution.user_id %>
+      </dd>
+
+      <dt>
+        Lift
+      </dt>
+      <dd>
+        <%= @execution.lift_id %>
+      </dd>
+
+      <dt>
+        Sets
+      </dt>
+      <dd>
+        <%= @execution.sets %>
+      </dd>
+
+      <dt>
+        Reps
+      </dt>
+      <dd>
+        <%= @execution.reps %>
+      </dd>
+
+      <dt>
+        Weight
+      </dt>
+      <dd>
+        <%= @execution.weight %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@execution.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@execution.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit execution
+    </h2>
+
+    <form action="/modify_execution/<%= @execution.id %>"  method="post" >
+      <div class="form-group">
+        <label for="date_box">
+          Date
+        </label>
+
+        <input type="date" id="date_box" name="date_from_query" class="form-control" value="<%= @execution.date %>">
+      </div>
+
+      <div class="form-group">
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="user_id_from_query" class="form-control" value="<%= @execution.user_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="lift_id_box">
+          Lift
+        </label>
+
+        <input type="text" id="lift_id_box" name="lift_id_from_query" class="form-control" value="<%= @execution.lift_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="sets_box">
+          Sets
+        </label>
+
+        <input type="text" id="sets_box" name="sets_from_query" class="form-control" value="<%= @execution.sets %>">
+      </div>
+
+      <div class="form-group">
+        <label for="reps_box">
+          Reps
+        </label>
+
+        <input type="text" id="reps_box" name="reps_from_query" class="form-control" value="<%= @execution.reps %>">
+      </div>
+
+      <div class="form-group">
+        <label for="weight_box">
+          Weight
+        </label>
+
+        <input type="text" id="weight_box" name="weight_from_query" class="form-control" value="<%= @execution.weight %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update execution
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

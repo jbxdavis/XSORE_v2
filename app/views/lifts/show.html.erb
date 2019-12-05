@@ -1,0 +1,161 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      <%= @lift.lift_name %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/lifts" class="btn btn-block btn-outline-secondary">
+          Go Back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_lift/<%= @lift.id %>" class="btn btn-block btn-outline-secondary">
+          Delete lift
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Lift Name
+      </dt>
+      <dd>
+        <%= @lift.lift_name %>
+      </dd>
+
+      <dt>
+        Category
+      </dt>
+      <dd>
+        <%= @lift.category %>
+      </dd>
+
+      <dt>
+        Primary Muscle Group
+      </dt>
+      <dd>
+        <%= @lift.prim_mg %>
+      </dd>
+
+      <dt>
+        Secondary Muscle Group
+      </dt>
+      <dd>
+        <%= @lift.sec_mg %>
+      </dd>
+
+      <dt>
+        Default Sets
+      </dt>
+      <dd>
+        <%= @lift.def_sets %>
+      </dd>
+
+      <dt>
+        Default Reps
+      </dt>
+      <dd>
+        <%= @lift.def_reps %>
+      </dd>
+
+      <dt>
+        Image
+      </dt>
+      <dd>
+        <img src="<%= @lift.image %>" height="300">
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@lift.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@lift.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit Lift
+    </h2>
+
+    <form action="/modify_lift/<%= @lift.id %>"  method="post" >
+      <div class="form-group">
+        <label for="lift_name_box">
+          Lift Name
+        </label>
+
+        <input type="text" id="lift_name_box" name="lift_name_from_query" class="form-control" value="<%= @lift.lift_name %>">
+      </div>
+
+      <div class="form-group">
+        <label for="category_box">
+          Category
+        </label>
+
+        <input type="text" id="category_box" name="category_from_query" class="form-control" value="<%= @lift.category %>">
+      </div>
+
+      <div class="form-group">
+        <label for="prim_mg_box">
+          Primary Muscle Group
+        </label>
+
+        <input type="text" id="prim_mg_box" name="prim_mg_from_query" class="form-control" value="<%= @lift.prim_mg %>">
+      </div>
+
+      <div class="form-group">
+        <label for="sec_mg_box">
+          Secondary Muscle Group
+        </label>
+
+        <input type="text" id="sec_mg_box" name="sec_mg_from_query" class="form-control" value="<%= @lift.sec_mg %>">
+      </div>
+
+      <div class="form-group">
+        <label for="def_sets_box">
+          Default Sets
+        </label>
+
+        <input type="text" id="def_sets_box" name="def_sets_from_query" class="form-control" value="<%= @lift.def_sets %>">
+      </div>
+
+      <div class="form-group">
+        <label for="def_reps_box">
+          Default Reps
+        </label>
+
+        <input type="text" id="def_reps_box" name="def_reps_from_query" class="form-control" value="<%= @lift.def_reps %>">
+      </div>
+
+      <div class="form-group">
+        <label for="image_box">
+          Image Link
+        </label>
+
+        <input type="text" id="image_box" name="image_from_query" class="form-control" value="<%= @lift.image %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update Lift
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
