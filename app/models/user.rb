@@ -18,4 +18,8 @@ class User < ApplicationRecord
   validates :email, :presence => true
   has_secure_password
 
+  def executions
+    return Execution.where({ :user_id => self.id }).order({ :created_at => :desc})
+  end
+
 end

@@ -23,4 +23,8 @@ class Lift < ApplicationRecord
   #validations
   validates :category, :presence => { :message => "Must classify as push, pull, or ab/leg" }
   
+  def executions
+    return Execution.where({ :lift_id => self.id })
+  end
+
 end

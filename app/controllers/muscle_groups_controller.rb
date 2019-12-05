@@ -46,4 +46,5 @@ class MuscleGroupsController < ApplicationController
 
     redirect_to("/muscle_groups", { :notice => "Muscle group deleted successfully."} )
   end
+
 end
