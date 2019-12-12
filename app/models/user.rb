@@ -19,7 +19,7 @@ class User < ApplicationRecord
   has_secure_password
 
   def executions
-    return Execution.where({ :user_id => self.id }).order({ :created_at => :desc})
+    return Execution.where({ :user_id => self.id }).order({ :date => :desc})
   end
 
 end

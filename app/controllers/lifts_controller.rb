@@ -1,8 +1,30 @@
 class LiftsController < ApplicationController
-  def index
-    @lifts = Lift.all.order({ :created_at => :desc })
+  def index_no_form
+    @lifts = Lift.all.order({ :lift_name => :asc })
 
-    render({ :template => "lifts/index.html.erb" })
+    respond_to do |format|
+      format.json do
+        render({ :json => @lifts.as_json })
+      end
+    
+      format.html do
+        render({ :template =>"lifts/index_no_form.html.erb" })
+      end
+    end
+  end
+
+  def form
+    @lifts = Lift.all.order({ :lift_name => :asc })
+
+    respond_to do |format|
+      format.json do
+        render({ :json => @lifts.as_json })
+      end
+    
+      format.html do
+        render({ :template =>"lifts/form.html.erb" })
+      end
+    end
   end
 
   def show
@@ -10,6 +32,13 @@ class LiftsController < ApplicationController
     @lift = Lift.where({:id => the_id }).at(0)
 
     render({ :template => "lifts/show.html.erb" })
+  end
+
+  def history
+    the_id = params.fetch("id_from_path")
+    @lift = Lift.where({ :id => the_id }).at(0)
+
+    render({ :template => "lifts/lift_history.html.erb"})
   end
 
   def create

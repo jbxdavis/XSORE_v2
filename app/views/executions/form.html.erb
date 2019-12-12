@@ -1,7 +1,7 @@
 <div class="row mb-3">
   <div class="col-md-12">
     <h1>
-      List of all executions
+      Executions
     </h1>
   </div>
 </div>
@@ -9,7 +9,7 @@
 <hr>
 
 <div class="row mb-3">
-  <div class="col-md-8 offset-md-2">
+  <div class="col-md-8 offset-md-1">
     <h2>
       Add a New Execution
     </h2>
@@ -20,15 +20,11 @@
           Date
         </label>
 
-        <input type="date" id="date_box" name="date_from_query" class="form-control">
+        <input type="date" id="date_box" name="date_from_query" class="form-control" value="<%= Date.today %>" 
       </div>
 
       <div class="form-group">
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="user_id_from_query" class="form-control">
+        <input type="hidden" value="<%= @current_user.id %>" name="user_id_from_query" class="form-control">
       </div>
 
       <div class="form-group">
@@ -36,7 +32,11 @@
           Lift
         </label>
 
-        <input type="text" id="lift_id_box" name="lift_id_from_query" class="form-control">
+      <select class="form-control" id="lift_id_from_query" name="lift_id_from_query">
+      <% Lift.all.order({ :lift_name => :asc }).each do |the_lift| %>
+        <option value=<%= the_lift.id%> ><%= the_lift.lift_name %></option>
+      <% end %>
+      </select>
       </div>
 
       <div class="form-group">
@@ -63,6 +63,14 @@
         <input type="text" id="weight_box" name="weight_from_query" class="form-control">
       </div>
 
+      <div class="form-group">
+        <label for="comment_box">
+          Comment
+        </label>
+
+        <input type="text" id="comment_box" name="comment_from_query" placeholder="Enter a comment if you'd like..." class="form-control">
+      </div>
+
       <button class="btn btn-block btn-outline-secondary">
         Create execution
       </button>
@@ -72,12 +80,9 @@
 
 <hr>
 <div class="row mb-3">
-  <div class="col-md-12">
+  <div class="col-md-12 offset-md-1">
     <table class="table">
       <tr>
-        <th>
-          ID
-        </th>
 
         <th>
           Date
@@ -104,11 +109,7 @@
         </th>
 
         <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
+          Comment
         </th>
 
         <th>
@@ -117,20 +118,21 @@
 
       <% @executions.each do |execution| %>
       <tr>
-        <td>
-          <%= execution.id %>
-        </td>
 
         <td>
           <%= execution.date %>
         </td>
 
         <td>
-          <%= execution.user_id %>
+          <% executor_id = execution.user_id %>
+          <% executor_rec = User.where({ :id => executor_id }).at(0) %>
+          <%= executor_rec.email %>
         </td>
 
         <td>
-          <%= execution.lift_id %>
+          <% lift_id = execution.lift_id %>
+          <% lift_rec = Lift.where({ :id => lift_id }).at(0) %>
+          <%= lift_rec.lift_name %>
         </td>
 
         <td>
@@ -146,16 +148,17 @@
         </td>
 
         <td>
-          <%= time_ago_in_words(execution.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(execution.updated_at) %> ago
+          <%= execution.comment %>
         </td>
 
         <td>
-          <a href="/executions/<%= execution.id %>">
-            Show details
-          </a>
+          <% if @current_user.id == execution.user_id %>
+            <a href="/executions/<%= execution.id %>">
+              View / Update
+            </a>
+          <% else %>
+            Other User's Record
+          <% end %>
         </td>
       </tr>
       <% end %>

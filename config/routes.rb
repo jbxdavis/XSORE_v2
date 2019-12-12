@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
   # Home Screen
-  match("/", { :controller => "executions", :action => "index", :via => "get"})
+  match("/", { :controller => "executions", :action => "index_no_form", :via => "get"})
+
+  #Profile
+  match("/profile", { :controller => "executions", :action => "index_profile", :via => "get"})
 
   # Routes for the Execution resource:
 
@@ -10,6 +13,8 @@ Rails.application.routes.draw do
           
   # READ
   match("/executions", { :controller => "executions", :action => "index", :via => "get"})
+
+  match("/executions_form", { :controller => "executions", :action => "form", :via => "get"})
   
   match("/executions/:id_from_path", { :controller => "executions", :action => "show", :via => "get"})
   
@@ -28,10 +33,14 @@ Rails.application.routes.draw do
   match("/insert_lift", { :controller => "lifts", :action => "create", :via => "post"})
           
   # READ
-  match("/lifts", { :controller => "lifts", :action => "index", :via => "get"})
+  match("/lifts", { :controller => "lifts", :action => "index_no_form", :via => "get"})
+
+  match("/lifts_form", { :controller => "lifts", :action => "form", :via => "get" })
   
   match("/lifts/:id_from_path", { :controller => "lifts", :action => "show", :via => "get"})
   
+  match("/lifts/:id_from_path/history", { :controller => "lifts", :action => "history", :via => "get"})
+
   # UPDATE
   
   match("/modify_lift/:id_from_path", { :controller => "lifts", :action => "update", :via => "post"})
@@ -47,8 +56,11 @@ Rails.application.routes.draw do
   match("/insert_muscle_group", { :controller => "muscle_groups", :action => "create", :via => "post"})
           
   # READ
+
   match("/muscle_groups", { :controller => "muscle_groups", :action => "index", :via => "get"})
-  
+
+  match("/muscle_groups_no_form", { :controller => "muscle_groups", :action => "index_no_form", :via => "get" })
+    
   match("/muscle_groups/:id_from_path", { :controller => "muscle_groups", :action => "show", :via => "get"})
   
   # UPDATE

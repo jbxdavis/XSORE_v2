@@ -15,14 +15,16 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Navigation</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/">Profile</a>
+              <a class="nav-link" href="/executions_form">Log Execution</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/lifts">Lifts</a>
@@ -31,7 +33,7 @@
               <a class="nav-link" href="/executions">Executions</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/muscle_groups">Muscle Groups</a>
+              <a class="nav-link" href="/muscle_groups_no_form">Muscle Groups</a>
             </li>
             <% if @current_user == nil %>
               <li class="nav-item">

@@ -1,0 +1,117 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      Lifts
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+    <a href="/lifts_form" class="btn btn-block btn-outline-secondary">
+      Add a New Lift
+    </a>
+</div>
+
+<hr>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+
+        <th>
+          Lift Name
+        </th>
+
+        <th>
+          Category
+        </th>
+
+        <th>
+          Primary Muscle Group
+        </th>
+
+        <th>
+          Secondary Muscle Group
+        </th>
+
+        <th>
+          Default Sets
+        </th>
+
+        <th>
+          Default Reps
+        </th>
+
+        <th>
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @lifts.each do |lift| %>
+      <tr>
+
+        <td>
+          <%= lift.lift_name %>
+        </td>
+
+        <td>
+          <% cat = lift.category %>
+          <% if cat == "ab_leg" %>
+            <% output = "Abs / Legs" %>
+          <% elsif cat == "pull" %>
+            <% output = "Pull" %>
+          <% elsif cat == "push" %>
+            <% output = "Push" %>
+          <% else %>
+            <% output = "Something's Wrong" %>
+          <% end %>
+          <%= output %>
+
+        </td>
+
+        <td>
+          <% mg_id = lift.prim_mg %>
+          <% mg_record = MuscleGroup.where({ :id => mg_id }).at(0) %>
+          <%= mg_record.name %>
+        </td>
+
+        <td>
+          <% if lift.sec_mg == nil || lift.sec_mg == 0 %>
+            <%= "None" %>
+          <% else %>
+            <% mg_id = lift.sec_mg %>
+            <% mg_record = MuscleGroup.where({ :id => mg_id }).at(0) %>
+            <%= mg_record.name %>
+          <% end %>
+        </td>
+
+        <td>
+          <%= lift.def_sets %>
+        </td>
+
+        <td>
+          <%= lift.def_reps %>
+        </td>
+
+        <td>
+          <a href="/lifts/<%= lift.id %>/history">
+            History (<%= @current_user.executions.where({ :lift_id => lift.id }).count %>)
+          </a>
+        </td>
+
+        <td>
+          <a href="/lifts/<%= lift.id %>">
+            View / Update
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

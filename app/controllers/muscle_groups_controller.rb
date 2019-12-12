@@ -1,8 +1,14 @@
 class MuscleGroupsController < ApplicationController
   def index
-    @muscle_groups = MuscleGroup.all.order({ :created_at => :desc })
+    @muscle_groups = MuscleGroup.all.order({ :name => :asc })
 
     render({ :template => "muscle_groups/index.html.erb" })
+  end
+
+  def index_no_form
+    @muscle_groups = MuscleGroup.all.order({ :name => :asc })
+
+    render({ :template => "muscle_groups/index_no_form.html.erb" })
   end
 
   def show

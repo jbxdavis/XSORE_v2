@@ -1,8 +1,14 @@
 class ExecutionsController < ApplicationController
   def index
-    @executions = Execution.all.order({ :created_at => :desc })
+    @executions = Execution.all.order({ :date => :desc })
 
-    render({ :template => "executions/index.html.erb" })
+    render({ :template => "executions/index_no_form.html.erb" })
+  end
+
+  def form
+    @executions = Execution.all.order({ :date => :desc })
+
+    render({ :template => "executions/form.html.erb" })
   end
 
   def show
@@ -20,6 +26,7 @@ class ExecutionsController < ApplicationController
     @execution.sets = params.fetch("sets_from_query")
     @execution.reps = params.fetch("reps_from_query")
     @execution.weight = params.fetch("weight_from_query")
+    @execution.comment = params.fetch("comment_from_query")
 
     if @execution.valid?
       @execution.save
@@ -39,6 +46,7 @@ class ExecutionsController < ApplicationController
     @execution.sets = params.fetch("sets_from_query")
     @execution.reps = params.fetch("reps_from_query")
     @execution.weight = params.fetch("weight_from_query")
+    @execution.comment = params.fetch("comment_from_query")
 
     if @execution.valid?
       @execution.save

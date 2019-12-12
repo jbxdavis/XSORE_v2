@@ -1,0 +1,168 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      <%= @lift.lift_name %> Details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/lifts" class="btn btn-block btn-outline-secondary">
+          Go Back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/executions_form" class="btn btn-block btn-outline-secondary">
+          Add Execution
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Lift Name
+      </dt>
+      <dd>
+        <%= @lift.lift_name %>
+      </dd>
+
+      <dt>
+        Category
+      </dt>
+      <dd>
+          <% cat = @lift.category %>
+          <% if cat == "ab_leg" %>
+            <% output = "Abs / Legs" %>
+          <% elsif cat == "pull" %>
+            <% output = "Pull" %>
+          <% elsif cat == "push" %>
+            <% output = "Push" %>
+          <% else %>
+            <% output = "Something's Wrong" %>
+          <% end %>
+          <%= output %>
+      </dd>
+
+      <dt>
+        Primary Muscle Group
+      </dt>
+      <dd>
+          <% mg_id = @lift.prim_mg %>
+          <% mg_record = MuscleGroup.where({ :id => mg_id }).at(0) %>
+          <%= mg_record.name %>
+      </dd>
+
+      <dt>
+        Secondary Muscle Group
+      </dt>
+      <dd>
+          <% if @lift.sec_mg == nil || @lift.sec_mg == 0 %>
+            <%= "None" %>
+          <% else %>
+            <% mg_id = @lift.sec_mg %>
+            <% mg_record = MuscleGroup.where({ :id => mg_id }).at(0) %>
+            <%= mg_record.name %>
+          <% end %>
+      </dd>
+
+      <dt>
+        Default Sets
+      </dt>
+      <dd>
+        <%= @lift.def_sets %>
+      </dd>
+
+      <dt>
+        Default Reps
+      </dt>
+      <dd>
+        <%= @lift.def_reps %>
+      </dd>
+
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Lift History
+    </h2>
+      <table class="table">
+      <tr>
+
+        <th>
+          Date
+        </th>
+
+        <th>
+          Lift
+        </th>
+
+        <th>
+          Sets
+        </th>
+
+        <th>
+          Reps
+        </th>
+
+        <th>
+          Weight
+        </th>
+
+        <th>
+          Comment
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @current_user.executions.where({ :lift_id => @lift.id }).each do |execution| %>
+      <tr>
+
+        <td>
+          <%= execution.date %>
+        </td>
+
+        <td>
+          <% lift_id = execution.lift_id %>
+          <% lift_rec = Lift.where({ :id => lift_id }).at(0) %>
+          <%= lift_rec.lift_name %>
+        </td>
+
+        <td>
+          <%= execution.sets %>
+        </td>
+
+        <td>
+          <%= execution.reps %>
+        </td>
+
+        <td>
+          <%= execution.weight %>
+        </td>
+
+        <td>
+          <%= execution.comment %>
+        </td>
+
+        <td>
+          <% if @current_user.id == execution.user_id %>
+            <a href="/executions/<%= execution.id %>">
+              View / Update
+            </a>
+          <% else %>
+            Other User's Record
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

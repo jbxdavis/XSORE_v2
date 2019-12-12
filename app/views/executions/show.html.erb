@@ -1,19 +1,19 @@
 <div class="row mb-3">
   <div class="col-md-8 offset-md-2">
     <h1>
-      Execution #<%= @execution.id %> details
+      Execution Details
     </h1>
 
     <div class="row mb-3">
       <div class="col">
         <a href="/executions" class="btn btn-block btn-outline-secondary">
-          Go back
+          Go Back
         </a>
       </div>
 
       <div class="col">
         <a href="/delete_execution/<%= @execution.id %>" class="btn btn-block btn-outline-secondary">
-          Delete execution
+          Delete Execution
         </a>
       </div>
     </div>
@@ -30,14 +30,18 @@
         User
       </dt>
       <dd>
-        <%= @execution.user_id %>
+        <% executor_id = @execution.user_id %>
+        <% executor_rec = User.where({ :id => executor_id }).at(0) %>
+        <%= executor_rec.email %>
       </dd>
 
       <dt>
         Lift
       </dt>
       <dd>
-        <%= @execution.lift_id %>
+        <% lift_id = @execution.lift_id %>
+        <% lift_rec = Lift.where({ :id => lift_id }).at(0) %>
+        <%= lift_rec.lift_name %>
       </dd>
 
       <dt>
@@ -62,18 +66,16 @@
       </dd>
 
       <dt>
-        Created at
+        Comment
       </dt>
       <dd>
-        <%= time_ago_in_words(@execution.created_at) %> ago
+        <% if @execution.comment == nil %>
+          <% then output = "None" %>
+          <% else output = @execution.comment %>
+          <% end %>
+        <%= output %>
       </dd>
 
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@execution.updated_at) %> ago
-      </dd>
     </dl>
   </div>
 </div>
@@ -84,7 +86,7 @@
 <div class="row mb-3">
   <div class="col-md-8 offset-md-2">
     <h2>
-      Edit execution
+      Edit Execution
     </h2>
 
     <form action="/modify_execution/<%= @execution.id %>"  method="post" >
@@ -97,19 +99,21 @@
       </div>
 
       <div class="form-group">
-        <label for="user_id_box">
-          User
-        </label>
 
-        <input type="text" id="user_id_box" name="user_id_from_query" class="form-control" value="<%= @execution.user_id %>">
+        <input type="hidden" id="user_id_box" name="user_id_from_query" class="form-control" value="<%= @execution.user_id %>">
       </div>
 
       <div class="form-group">
         <label for="lift_id_box">
           Lift
         </label>
+        
+        <select class="form-control" id="lift_id_from_query" name="lift_id_from_query">
+        <% Lift.all.order({ :lift_name => :asc }).each do |the_lift| %>
+          <option value=<%= the_lift.id%> ><%= the_lift.lift_name %></option>
+        <% end %>
+        </select>
 
-        <input type="text" id="lift_id_box" name="lift_id_from_query" class="form-control" value="<%= @execution.lift_id %>">
       </div>
 
       <div class="form-group">
@@ -134,6 +138,14 @@
         </label>
 
         <input type="text" id="weight_box" name="weight_from_query" class="form-control" value="<%= @execution.weight %>">
+      </div>
+
+      <div class="form-group">
+        <label for="comment_box">
+          Comment
+        </label>
+
+        <input type="text" id="comment_box" name="comment_from_query" class="form-control" value="<%= @execution.comment %>">
       </div>
 
       <button class="btn btn-block btn-outline-secondary">

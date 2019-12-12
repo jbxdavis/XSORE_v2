@@ -1,7 +1,7 @@
 <div class="row mb-3">
   <div class="col-md-8 offset-md-2">
     <h1>
-      <%= @lift.lift_name %> details
+      <%= @lift.lift_name %> Details
     </h1>
 
     <div class="row mb-3">
@@ -30,21 +30,39 @@
         Category
       </dt>
       <dd>
-        <%= @lift.category %>
+          <% cat = @lift.category %>
+          <% if cat == "ab_leg" %>
+            <% output = "Abs / Legs" %>
+          <% elsif cat == "pull" %>
+            <% output = "Pull" %>
+          <% elsif cat == "push" %>
+            <% output = "Push" %>
+          <% else %>
+            <% output = "Something's Wrong" %>
+          <% end %>
+          <%= output %>
       </dd>
 
       <dt>
         Primary Muscle Group
       </dt>
       <dd>
-        <%= @lift.prim_mg %>
+          <% mg_id = @lift.prim_mg %>
+          <% mg_record = MuscleGroup.where({ :id => mg_id }).at(0) %>
+          <%= mg_record.name %>
       </dd>
 
       <dt>
         Secondary Muscle Group
       </dt>
       <dd>
-        <%= @lift.sec_mg %>
+          <% if @lift.sec_mg == nil || @lift.sec_mg == 0 %>
+            <%= "None" %>
+          <% else %>
+            <% mg_id = @lift.sec_mg %>
+            <% mg_record = MuscleGroup.where({ :id => mg_id }).at(0) %>
+            <%= mg_record.name %>
+          <% end %>
       </dd>
 
       <dt>
@@ -104,11 +122,30 @@
       </div>
 
       <div class="form-group">
-        <label for="category_box">
+        <label for="category_select">
           Category
         </label>
 
-        <input type="text" id="category_box" name="category_from_query" class="form-control" value="<%= @lift.category %>">
+      <select class="form-control" id="category_select" name="category_from_query" selected="<%= @lift.category %>">
+        <option value="push".to_s
+          <% if @lift.category == "push" %>
+          <%= "selected" %>
+          <% else %>
+          <% end %>
+        >Push</option>
+        <option value="pull".to_s
+          <% if @lift.category == "pull" %>
+          <%= "selected" %>
+          <% else %>
+          <% end %>
+        >Pull</option>
+        <option value="ab_leg".to_s
+          <% if @lift.category == "ab_leg" %>
+          <%= "selected" %>
+          <% else %>
+          <% end %>
+        >Abs / Legs</option>
+      </select>
       </div>
 
       <div class="form-group">
@@ -116,7 +153,15 @@
           Primary Muscle Group
         </label>
 
-        <input type="text" id="prim_mg_box" name="prim_mg_from_query" class="form-control" value="<%= @lift.prim_mg %>">
+        <select class="form-control" id="prim_mg_box" name="prim_mg_from_query">
+          <% MuscleGroup.all.order({ :name => :asc }).each do |the_mg| %>
+            <% if the_mg.id == @lift.prim_mg %>
+              <option value=<%= the_mg.id %> selected ><%= the_mg.name %></option>
+            <% else %>
+              <option value=<%= the_mg.id %> ><%= the_mg.name %></option>
+            <% end %>
+        <% end %>
+        </select>
       </div>
 
       <div class="form-group">
@@ -124,7 +169,16 @@
           Secondary Muscle Group
         </label>
 
-        <input type="text" id="sec_mg_box" name="sec_mg_from_query" class="form-control" value="<%= @lift.sec_mg %>">
+      <select class="form-control" id="sec_mg_box" name="sec_mg_from_query">
+          <option value=nil>None</option>
+        <% MuscleGroup.all.order({ :name => :asc }).each do |the_mg| %>
+            <% if the_mg.id == @lift.sec_mg %>
+              <option value=<%= the_mg.id %> selected ><%= the_mg.name %></option>
+            <% else %>
+              <option value=<%= the_mg.id %> ><%= the_mg.name %></option>
+            <% end %>
+        <% end %>
+      </select>
       </div>
 
       <div class="form-group">

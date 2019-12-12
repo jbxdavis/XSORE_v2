@@ -1,0 +1,105 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      All Executions
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+    <a href="/executions_form" class="btn btn-block btn-outline-secondary">
+      Log an Execution
+    </a>
+</div>
+
+<hr>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+
+        <th>
+          Date
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Lift
+        </th>
+
+        <th>
+          Sets
+        </th>
+
+        <th>
+          Reps
+        </th>
+
+        <th>
+          Weight
+        </th>
+
+        <th>
+          Comment
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @executions.each do |execution| %>
+      <tr>
+
+        <td>
+          <%= execution.date %>
+        </td>
+
+        <td>
+          <% executor_id = execution.user_id %>
+          <% executor_rec = User.where({ :id => executor_id }).at(0) %>
+          <%= executor_rec.email %>
+        </td>
+
+        <td>
+          <% lift_id = execution.lift_id %>
+          <% lift_rec = Lift.where({ :id => lift_id }).at(0) %>
+          <%= lift_rec.lift_name %>
+        </td>
+
+        <td>
+          <%= execution.sets %>
+        </td>
+
+        <td>
+          <%= execution.reps %>
+        </td>
+
+        <td>
+          <%= execution.weight %>
+        </td>
+
+        <td>
+          <%= execution.comment %>
+        </td>
+
+        <td>
+          <% if @current_user.id == execution.user_id %>
+            <a href="/executions/<%= execution.id %>">
+              View / Update
+            </a>
+          <% else %>
+            Other User's Record
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
