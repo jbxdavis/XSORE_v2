@@ -55,7 +55,7 @@ class LiftsController < ApplicationController
       @lift.save
       redirect_to("/lifts", { :notice => "Lift created successfully." })
     else
-      redirect_to("/lifts", { :notice => "Lift failed to create successfully." })
+      redirect_to("/lifts", { :alert => "Lift failed to create successfully." })
     end
   end
 

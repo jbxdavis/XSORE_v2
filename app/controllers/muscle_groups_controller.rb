@@ -26,7 +26,7 @@ class MuscleGroupsController < ApplicationController
       @muscle_group.save
       redirect_to("/muscle_groups", { :notice => "Muscle group created successfully." })
     else
-      redirect_to("/muscle_groups", { :notice => "Muscle group failed to create successfully." })
+      redirect_to("/muscle_groups", { :alert => "Muscle group failed to create successfully." })
     end
   end
 

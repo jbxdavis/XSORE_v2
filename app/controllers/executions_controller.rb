@@ -32,7 +32,7 @@ class ExecutionsController < ApplicationController
       @execution.save
       redirect_to("/executions", { :notice => "Execution created successfully." })
     else
-      redirect_to("/executions", { :notice => "Execution failed to create successfully." })
+      redirect_to("/executions", { :alert => "Execution failed to create successfully." })
     end
   end
 

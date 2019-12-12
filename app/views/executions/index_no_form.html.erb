@@ -52,6 +52,9 @@
         </th>
       </tr>
 
+      <% if @executions == nil %>
+      <% else %>
+      
       <% @executions.each do |execution| %>
       <tr>
 
@@ -97,6 +100,7 @@
           <% end %>
         </td>
       </tr>
+      <% end %>
       <% end %>
     </table>
   </div>
